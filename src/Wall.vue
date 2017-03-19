@@ -21,7 +21,7 @@ import db from './db'
 
 const maxLength = 10;
 
-const wallRef = db.ref('wall');
+const wallRef = db.ref('room/testwall');
 
 export default {
   data: () => {
@@ -31,7 +31,7 @@ export default {
   },
   props: ['name'],
   firebase: {
-    wall: wallRef
+    wall: wallRef,
   },
   methods: {
     post() {
