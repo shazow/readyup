@@ -5,7 +5,7 @@
       Coordinate your work or play sessions with your friends.
     </p>
     <p>
-      I am <input type="text" v-model.trim="name" />
+      I am <input type="text" v-model.trim="name" maxlength="10" />
     </p>
 
     <wall :name="name"></wall>
