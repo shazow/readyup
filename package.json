@@ -6,6 +6,10 @@
   "repository": "https://github.com/shazow/readyup",
   "author": "Andrey Petrov <andrey.petrov@shazow.net>",
   "license": "MIT",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+  },
   "dependencies": {
     "firebase": "^3.7.2",
     "vue": "^2.2.4",
