@@ -1,0 +1,14 @@
+{
+  "name": "readyup",
+  "version": "1.0.0",
+  "description": "Coordinate your work or play sessions with your friends.",
+  "main": "index.js",
+  "repository": "https://github.com/shazow/readyup",
+  "author": "Andrey Petrov <andrey.petrov@shazow.net>",
+  "license": "MIT",
+  "dependencies": {
+    "firebase": "^3.7.2",
+    "vue": "^2.2.4",
+    "vuefire": "^1.4.0"
+  }
+}
