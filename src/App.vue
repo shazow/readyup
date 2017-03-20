@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <h1>readyup</h1>
     <p>
       Coordinate your work or play sessions with your friends.
@@ -7,33 +7,27 @@
     <p>
       I am <input type="text" v-model.trim="name" maxlength="10" />
     </p>
-
-    <wall :name="name"></wall>
+    <router-view class="view"></router-view>
   </div>
 </template>
 
 <script>
-import Wall from './Wall.vue'
-
-const defaultName = 'Anonymoose'
-
 export default {
-  name: 'readyup',
-  data: () => {
+  name: "App",
+  data() {
     return {
-      name: defaultName
+      name: '',
+      room: '',
     }
   },
-  methods: {
+  mounted() {
+    console.log("created app", this)
   },
-  components: {
-    Wall
-  }
 }
 </script>
 
 <style lang="scss">
-#app {
+body {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

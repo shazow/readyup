@@ -17,7 +17,8 @@
 </template>
 
 <script>
-import db from './db'
+
+import db from '../db'
 
 const maxLength = 10;
 
@@ -29,7 +30,7 @@ export default {
       text: ''
     }
   },
-  props: ['name'],
+  props: ['name', 'room'],
   firebase: {
     wall: wallRef,
   },
