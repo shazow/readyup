@@ -10,4 +10,7 @@ const firebaseConfig = {
 const firebaseApp = Firebase.initializeApp(firebaseConfig);
 const db = firebaseApp.database()
 
-export { db }
+export default {
+  name: "Anonymoose",
+  wallRef: db.ref("room/testwall"),
+}

@@ -22,8 +22,6 @@ import db from '../db'
 
 const maxLength = 10;
 
-const wallRef = db.ref('room/testwall');
-
 export default {
   data: () => {
     return {
@@ -32,18 +30,18 @@ export default {
   },
   props: ['name', 'room'],
   firebase: {
-    wall: wallRef,
+    wall: db.wallRef,
   },
   methods: {
     post() {
-      wallRef.push({
+      db.wallRef.push({
         name: this.name,
         text: this.text
       });
       this.text = "";
       if (this.wall.length > maxLength) {
         // Remove the first child
-        wallRef.child(this.wall[0][".key"]).remove()
+        db.wallRef.child(this.wall[0][".key"]).remove()
       }
     }
   }

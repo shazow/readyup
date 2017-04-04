@@ -10,6 +10,7 @@
 import Wall from '../components/Wall.vue'
 
 export default {
+  props: ['name'],
   mounted() {
     console.log("created room", this)
   },
