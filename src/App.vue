@@ -5,9 +5,9 @@
       Coordinate your work or play sessions with your friends.
     </p>
     <p>
-      I am <input type="text" v-model.trim="name" maxlength="10" />
+      I am <input type="text" v-model.trim="displayname" maxlength="10" />
     </p>
-    <router-view class="view"></router-view>
+    <router-view :displayname="displayname" class="view"></router-view>
   </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
   name: "App",
   data() {
     return {
-      name: 'Anonymoose',
+      displayname: 'Anonymoose',
       room: '',
     }
   },

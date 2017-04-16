@@ -3,11 +3,11 @@
     <h2>Wall</h2>
     <ul class="posts">
       <li v-for="post in wall">
-        <span class="name">{{post.name}}</span> {{post.text}}
+        <span class="displayname">{{post.displayname}}</span> {{post.text}}
       </li>
       <li>
         <form v-on:submit.prevent="post">
-          <span class="name">{{name}}</span>
+          <span class="displayname">{{displayname}}</span>
           <input type="text" v-model.trim="text" placeholder="..." />
           <input type="submit" value="Post" />
         </form>
@@ -28,14 +28,14 @@ export default {
       text: ''
     }
   },
-  props: ['name', 'room'],
+  props: ['displayname', 'room'],
   firebase: {
     wall: db.wallRef,
   },
   methods: {
     post() {
       db.wallRef.push({
-        name: this.name,
+        displayname: this.displayname,
         text: this.text
       });
       this.text = "";
@@ -54,7 +54,7 @@ export default {
         margin-bottom: 0.5em;
         line-height: 1.5em;
     }
-    .name {
+    .displayname {
         display: inline-block;
         vertical-align: bottom;
         width: 7em;
