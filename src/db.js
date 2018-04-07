@@ -8,9 +8,6 @@ const firebaseConfig = {
   messagingSenderId: "441335442636"
 };
 const firebaseApp = Firebase.initializeApp(firebaseConfig);
-const db = firebaseApp.database()
+const db = firebaseApp.database();
 
-export default {
-  name: "Anonymoose",
-  wallRef: db.ref("room/testwall"),
-}
+export default db;

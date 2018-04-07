@@ -18,30 +18,39 @@
 
 <script>
 
-import db from '../db'
+import db from '../db';
 
 const maxLength = 10;
 
 export default {
+  mounted() {
+    console.log("created wall", this)
+  },
+  props: ['room', 'displayname', 'wall'],
   data: () => {
     return {
-      text: ''
-    }
+      posts: [],
+      text: '',
+    };
   },
-  props: ['displayname', 'room'],
-  firebase: {
-    wall: db.wallRef,
+  watch: {
+    room: function(nil, val) {
+      // XXX: https://github.com/vuejs/vuefire/issues/76
+      console.log("binding posts", nil, val);
+      this.$bindAsArray('posts', db.ref(`room/${val}`));
+    }
   },
   methods: {
     post() {
-      db.wallRef.push({
+      const wallRef = db.ref(`room/${this.room}`);
+      wallRef.push({
         displayname: this.displayname,
         text: this.text
       });
       this.text = "";
-      if (this.wall.length > maxLength) {
+      if (this.posts.length > maxLength) {
         // Remove the first child
-        db.wallRef.child(this.wall[0][".key"]).remove()
+        wallRef.child(this.wall[0][".key"]).remove()
       }
     }
   }

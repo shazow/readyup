@@ -11,10 +11,10 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
-    "firebase": "^3.7.2",
-    "vue": "^2.2.4",
-    "vue-router": "^2.3.0",
-    "vuefire": "^1.4.0"
+    "firebase": "latest",
+    "vue": "latest",
+    "vue-router": "latest",
+    "vuefire": "latest"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
@@ -23,11 +23,11 @@
     "cross-env": "^3.0.0",
     "css-loader": "^0.25.0",
     "file-loader": "^0.9.0",
-    "node-sass": "^4.5.0",
-    "sass-loader": "^5.0.1",
-    "vue-cli": "^2.8.1",
-    "vue-loader": "^11.1.4",
-    "vue-template-compiler": "^2.2.1",
+    "node-sass": "latest",
+    "sass-loader": "latest",
+    "vue-cli": "latest",
+    "vue-loader": "latest",
+    "vue-template-compiler": "latest",
     "webpack": "^2.2.0",
     "webpack-dev-server": "^2.2.0"
   }
