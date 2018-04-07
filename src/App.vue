@@ -19,9 +19,6 @@ export default {
       room: '',
     }
   },
-  mounted() {
-    console.log("created app", this)
-  },
 }
 </script>
 

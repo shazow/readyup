@@ -1,8 +1,3 @@
-
-new Vue({
-  render: h => h(App)
-}).$mount('#app')
-
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueFire from 'vuefire'
