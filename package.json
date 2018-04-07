@@ -1,0 +1,17 @@
+{
+  "name": "readyup",
+  "version": "1.0.0",
+  "description": "Coordinate your work or play sessions with your friends.",
+  "main": "index.js",
+  "repository": "https://github.com/shazow/readyup",
+  "author": "Andrey Petrov <andrey.petrov@shazow.net>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}
