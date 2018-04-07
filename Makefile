@@ -1,2 +1,5 @@
+build:
+	npm run build
+
 run:
-	yarn run dev
+	npm run serve
