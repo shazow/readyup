@@ -2,7 +2,7 @@
   <div class="wall">
     <h2>Wall</h2>
     <ul class="posts">
-      <li v-for="(post, idx) in wall" :key='idx'>>
+      <li v-for="(post, idx) in posts" :key='idx'>>
         <span class="displayname">{{post.displayname}}</span> {{post.text}}
       </li>
       <li>
@@ -24,9 +24,6 @@ const maxLength = 10;
 
 export default {
   name: 'Wall',
-  mounted() {
-    console.log("created wall", this)
-  },
   props: ['room', 'displayname', 'wall'],
   data: () => {
     return {
@@ -37,16 +34,16 @@ export default {
   watch: {
     room: function(nil, val) {
       // XXX: https://github.com/vuejs/vuefire/issues/76
-      console.log("binding posts", nil, val);
-      this.$bindAsArray('posts', db.ref(`room/${val}`));
+      console.log("binding posts", nil, val)
+      this.$bindAsArray('posts', db.ref(`room/${val}`))
     }
   },
   methods: {
     post() {
-      const wallRef = db.ref(`room/${this.room}`);
+      const wallRef = db.ref(`room/${this.room}`)
       wallRef.push({
         displayname: this.displayname,
-        text: this.text
+        text: this.text,
       });
       this.text = "";
       if (this.posts.length > maxLength) {

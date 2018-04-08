@@ -7,6 +7,8 @@
     <p>
       I am <input type="text" v-model.trim="displayname" maxlength="10" />
     </p>
+
+    <router-view :displayname="displayname" class="view"></router-view>
   </div>
 </template>
 
