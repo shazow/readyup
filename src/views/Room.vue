@@ -1,30 +1,22 @@
 <template>
   <div class="room">
-    Hello to {{ $route.params.id }}.
+    Welcome to {{ $store.state.room }}.
 
-    <wall :displayname="displayname" :room="$route.params.id" :wall="wall"></wall>
+    <wall :displayname="displayname" :room="$route.params.id"></wall>
   </div>
 </template>
 
 <script>
 import Wall from '@/components/Wall.vue'
 
-import db from '@/db';
-
 export default {
   name: 'Room',
   props: ['displayname'],
-  data: () => {
-    const roomId = '123';
-    return {
-      wall: db.ref(`room/${roomId}`)
-    }
-  },
-  mounted() {
-    console.log("created room", this)
-  },
   components: {
     Wall,
-  }
+  },
+  created() {
+    this.$store.dispatch('setRoom', this.$route.params.id)
+  },
 }
 </script>

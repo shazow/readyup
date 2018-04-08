@@ -6,7 +6,8 @@
 export default {
   name: 'Index',
   mounted() {
-    this.$router.push({ name: 'room', params: { id: 123 }})
+    const roomId = 123
+    this.$router.push({ name: 'room', params: { id: roomId }})
   },
 }
 </script>

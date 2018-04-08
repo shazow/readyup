@@ -2,7 +2,7 @@
   <div class="wall">
     <h2>Wall</h2>
     <ul class="posts">
-      <li v-for="(post, idx) in posts" :key='idx'>>
+      <li v-for="(post, idx) in $store.state.posts" :key='idx'>>
         <span class="displayname">{{post.displayname}}</span> {{post.text}}
       </li>
       <li>
@@ -18,40 +18,23 @@
 
 <script>
 
-import db from '@/db';
-
-const maxLength = 10;
-
 export default {
   name: 'Wall',
-  props: ['room', 'displayname', 'wall'],
+  props: ['room', 'displayname'],
   data: () => {
     return {
-      posts: [],
       text: '',
     };
   },
-  watch: {
-    room: function(nil, val) {
-      // XXX: https://github.com/vuejs/vuefire/issues/76
-      console.log("binding posts", nil, val)
-      this.$bindAsArray('posts', db.ref(`room/${val}`))
-    }
-  },
   methods: {
     post() {
-      const wallRef = db.ref(`room/${this.room}`)
-      wallRef.push({
+      this.$store.commit('addPost', {
         displayname: this.displayname,
         text: this.text,
-      });
-      this.text = "";
-      if (this.posts.length > maxLength) {
-        // Remove the first child
-        wallRef.child(this.wall[0][".key"]).remove()
-      }
+      })
+      this.text = '';
     }
-  }
+  },
 }
 </script>
 
