@@ -84,7 +84,7 @@ export default {
     this.$store.subscribe(function(mutation, state) {
       if (mutation.type !== 'vuexfire/OBJECT_VALUE') return
       if (mutation.payload.key !== 'video') return
-      if (mutation.payload.record.paused === app.paused) return
+      if (mutation.payload.record.paused === this.paused) return
       this.pullState(state)
     }.bind(this))
   },
