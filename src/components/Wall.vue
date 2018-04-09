@@ -2,7 +2,7 @@
   <div class="wall">
     <h2>Wall</h2>
     <ul class="posts">
-      <li v-for="(post, idx) in $store.state.posts" :key='idx'>>
+      <li v-for="(post, idx) in $store.state.posts" :key='idx'>
         <span class="displayname">{{post.displayname}}</span> {{post.text}}
       </li>
       <li>

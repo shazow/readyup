@@ -14,12 +14,16 @@ export default new Vuex.Store({
   state: {
     room: '',
     posts: [],
+    video: {
+      id: '',
+      paused: false,
+    },
   },
   getters: {
   },
   mutations: {
     addPost(state, {displayname, text}) {
-      const ref = db.ref('room').child(state.room)
+      const ref = db.ref('room').child(state.room).child('posts')
       ref.push({displayname, text})
       if (state.posts.length > maxLength) {
         // Remove the first child
@@ -29,12 +33,16 @@ export default new Vuex.Store({
     setRoom(state, room) {
       state.room = room;
     },
+    setVideo(state, {id, paused}) {
+      db.ref('room').child(state.room).child('video').set({id, paused})
+    },
     ...firebaseMutations,
   },
   actions: {
     setRoom: firebaseAction(({ commit, bindFirebaseRef }, roomId) => {
       const ref = db.ref('room').child(roomId)
-      bindFirebaseRef('posts', ref)
+      bindFirebaseRef('posts', ref.child('posts'))
+      bindFirebaseRef('video', ref.child('video'))
       commit('setRoom', roomId)
     }),
   },
