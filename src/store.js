@@ -17,6 +17,7 @@ export default new Vuex.Store({
     video: {
       id: '',
       paused: false,
+      timestamp: 0,
     },
   },
   getters: {
@@ -34,7 +35,14 @@ export default new Vuex.Store({
       state.room = room;
     },
     setVideo(state, {id, paused}) {
-      db.ref('room').child(state.room).child('video').set({id, paused})
+      const timestamp = +new Date()
+      state.video = { id, paused, timestamp }
+      db.ref('room').child(state.room).child('video').set(state.video)
+    },
+    setVideoPause(state, paused) {
+      state.video.paused = paused
+      state.video.timestamp = +new Date()
+      db.ref('room').child(state.room).child('video').set(state.video)
     },
     ...firebaseMutations,
   },
