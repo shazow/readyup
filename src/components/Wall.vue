@@ -3,11 +3,11 @@
     <h2>Wall</h2>
     <ul class="posts">
       <li v-for="(post, idx) in $store.state.posts" :key='idx'>
-        <span class="displayname">{{post.displayname}}</span> {{post.text}}
+        <span class="displayname">{{$store.getters.name(post.from)}}</span> {{post.text}}
       </li>
       <li>
         <form v-on:submit.prevent="post">
-          <span class="displayname">{{displayname}}</span>
+          <span class="displayname">{{$store.state.me.name}}</span>
           <input type="text" v-model.trim="text" placeholder="..." />
           <input type="submit" value="Post" />
         </form>
@@ -20,7 +20,7 @@
 
 export default {
   name: 'Wall',
-  props: ['room', 'displayname'],
+  props: ['room'],
   data: () => {
     return {
       text: '',
@@ -28,10 +28,7 @@ export default {
   },
   methods: {
     post() {
-      this.$store.commit('addPost', {
-        displayname: this.displayname,
-        text: this.text,
-      })
+      this.$store.commit('addPost', this.text)
       this.text = '';
     }
   },

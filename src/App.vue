@@ -4,23 +4,13 @@
     <p>
       Coordinate your work or play sessions with your friends.
     </p>
-    <p>
-      I am <input type="text" v-model.trim="displayname" maxlength="10" />
-    </p>
-
-    <router-view :displayname="displayname" class="view"></router-view>
+    <router-view class="view"></router-view>
   </div>
 </template>
 
 <script>
 export default {
   name: 'app',
-  data() {
-    return {
-      displayname: 'Anonymoose',
-      room: '',
-    }
-  },
 }
 </script>
 
