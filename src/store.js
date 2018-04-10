@@ -11,8 +11,8 @@ const ipfs = new IPFS({
     Addresses: {
       Swarm: [
         // TODO: Try webrtc? https://github.com/ipfs/js-ipfs/issues/1088
-        // '/dns4/wrtc-star.discovery.libp2p.io/tcp/443/wss/p2p-webrtc-star'
-        '/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star'
+        '/dns4/wrtc-star.discovery.libp2p.io/tcp/443/wss/p2p-webrtc-star'
+        //'/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star'
       ]
     }
   }
@@ -157,6 +157,7 @@ export default new Vuex.Store({
       commit('setRoom', room)
 
       ipfs.on('ready', () => {
+        console.log('ready', this)
         ipfsRoom = Room(ipfs, state.room)
 
         ipfs.id().then((peerInfo) => {
@@ -165,6 +166,7 @@ export default new Vuex.Store({
 
         let numPeers = 0
         ipfsRoom.on('peer joined', (peer) => {
+          console.log('peer joined', peer)
           numPeers += 1
           commit('addPeer', peer)
 
@@ -174,10 +176,12 @@ export default new Vuex.Store({
         })
 
         ipfsRoom.on('peer left', (peer) => {
+          console.log('peer left', peer)
           commit('removePeer', peer)
         })
 
         ipfsRoom.on('subscribed', (id) => {
+          console.log('peer subscribed', id)
           if (id !== room) {
             console.error('wrong room, this should not happen')
           }
@@ -185,7 +189,9 @@ export default new Vuex.Store({
         })
 
         ipfsRoom.on('message', (message) => {
-          commit('handleReceive', {from: message.from, data: JSON.parse(message.data)})
+          const data = JSON.parse(message.data)
+          console.log('message', message.from, data)
+          commit('handleReceive', {from: message.from, data: data})
         })
       })
     },
