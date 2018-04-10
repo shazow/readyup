@@ -45,6 +45,7 @@ export default new Vuex.Store({
       id: '',
       paused: false,
       timestamp: 0,
+      offset: 0,
     },
     peers: {},
     started: +new Date(),
@@ -86,6 +87,9 @@ export default new Vuex.Store({
         state.posts = data.state.posts
         state.peers = data.state.peers
       }
+      if (data.video) {
+        state.video = data.video
+      }
     },
     addPost(state, post) {
       if (state.ready) {
@@ -121,13 +125,10 @@ export default new Vuex.Store({
     setRoom(state, room) {
       state.room = room;
     },
-    setVideo(state, {id, paused}) {
+    setVideo(state, {id, paused, offset }) {
       const timestamp = +new Date()
-      state.video = { id, paused, timestamp }
-    },
-    setVideoPause(state, paused) {
-      state.video.paused = paused
-      state.video.timestamp = +new Date()
+      state.video = { id, paused, timestamp, offset }
+      ipfsRoom.broadcast(JSON.stringify({video: state.video}))
     },
     addPeer(state, peer) {
       state.peers[peer] = {

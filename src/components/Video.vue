@@ -42,6 +42,7 @@ export default {
       if (this.$store.state.video.paused === this.paused) return;
       this.$store.commit('setVideo', {
         paused: this.paused,
+        offset: this.getOffset(),
         id: this.$store.state.video.id,
       })
     },
@@ -56,7 +57,7 @@ export default {
 
       if (video.timestamp) {
         const offset = ((+new Date()) - video.timestamp) / 1000
-        this.seek(offset)
+        this.seek(offset + video.offset)
       }
       this.play()
     },
@@ -72,9 +73,13 @@ export default {
     isPlaying() {
       return this.player && this.player.getPlayerState() === 1
     },
+    getOffset() {
+      return this.player && this.player.getCurrentTime() || 0
+    },
     post() {
       this.$store.commit('setVideo', {
         paused: true,
+        offset: 0,
         id: this.$youtube.getIdFromURL(this.url),
       })
       this.url = ''
@@ -82,8 +87,9 @@ export default {
   },
   mounted() {
     this.$store.subscribe(function(mutation, state) {
-      if (mutation.payload.key !== 'video') return
-      if (mutation.payload.record.paused === this.paused) return
+      if (mutation.type !== 'handleReceive') return
+      if (mutation.payload.data.video === undefined) return
+      if (mutation.payload.data.video.paused === this.paused) return
       this.pullState(state)
     }.bind(this))
   },
