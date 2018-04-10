@@ -23,6 +23,7 @@ export default {
       url: '',
       paused: true,
       player: null,
+      pulling: false,
     }
   },
   methods: {
@@ -32,6 +33,13 @@ export default {
     },
     handlePlaying() {
       this.paused = false
+      const video = this.$store.state.video
+      if (this.pulling) {
+        // Seek again just in case buffering took a while
+        this.pulling = false
+        const offset = video.timestamp ? ((+new Date()) - video.timestamp) / 1000 : 0
+        this.seek(offset + video.offset)
+      }
       this.pushState()
     },
     handlePaused() {
@@ -59,10 +67,11 @@ export default {
         const offset = ((+new Date()) - video.timestamp) / 1000
         this.seek(offset + video.offset)
       }
+      this.pulling = true
       this.play()
     },
     seek(offset) {
-      return this.player && this.player.seekTo(offset)
+      return offset && this.player && this.player.seekTo(offset)
     },
     play() {
       return this.player && this.player.playVideo()
