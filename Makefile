@@ -14,7 +14,7 @@ dist/: .git/worktrees/dist
 status: .git/worktrees/dist
 	$(GITDIST) status
 
-deploy: .git/worktrees/dist
+deploy: .git/worktrees/dist build
 	$(GITDIST) add .
 	$(GITDIST) commit . -m "Deploy" -e -v
 	$(GITDIST) push origin gh-pages

@@ -33,6 +33,13 @@ function defaultName() {
 
 let ipfsRoom;
 
+function getName(state, peer) {
+  if (!peer) return 'Anonymoose'
+  const p = state.peers[peer]
+  if (!p || !p.name) return anonName(peer)
+  return p.name
+}
+
 export default new Vuex.Store({
   strict: true,
   state: {
@@ -55,10 +62,7 @@ export default new Vuex.Store({
   },
   getters: {
     name: (state) => (peer) => {
-      if (!peer) return 'Anonymoose'
-      const p = state.peers[peer]
-      if (!p || !p.name) return anonName(peer)
-      return p.name
+      return getName(state, peer)
     }
   },
   mutations: {
@@ -96,6 +100,15 @@ export default new Vuex.Store({
         state.peers = data.state.peers
       }
       if (data.video) {
+        if (state.video.id !== data.video.id) {
+          state.posts.push({text: 'Video set by ' + getName(state, from)})
+        } else if (state.video.paused && !data.video.paused) {
+          state.posts.push({text: 'Video started by ' + getName(state, from) + ' at ' + Math.round(data.video.offset, 0)+'s'})
+        } else if (!state.video.paused && data.video.paused) {
+          state.posts.push({text: 'Video paused by ' + getName(state, from)})
+        } else if (!state.video.offset !== data.video.offset) {
+          state.posts.push({text: 'Video jumped by ' + getName(state, from)})
+        }
         state.video = data.video
       }
     },
@@ -137,8 +150,7 @@ export default new Vuex.Store({
     },
     setVideo(state, {id, paused, offset }) {
       const timestamp = +new Date()
-      state.video = { id, paused, timestamp, offset }
-      ipfsRoom.broadcast(JSON.stringify({video: state.video}))
+      ipfsRoom.broadcast(JSON.stringify({video: { id, paused, timestamp, offset }}))
     },
     addPeer(state, peer) {
       Vue.set(state.peers, peer, {

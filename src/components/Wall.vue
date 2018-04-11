@@ -2,8 +2,8 @@
   <div class="wall">
     <h2>Wall</h2>
     <ul class="posts">
-      <li v-for="(post, idx) in $store.state.posts" :key='idx'>
-        <span class="displayname">{{$store.getters.name(post.from)}}</span> {{post.text}}
+      <li v-for="(post, idx) in $store.state.posts" :key='idx' :class="{announce: !post.from}">
+        <span class="displayname" v-if="post.from">{{$store.getters.name(post.from)}}</span> {{post.text}}
       </li>
       <li>
         <form v-on:submit.prevent="post">
@@ -35,7 +35,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .wall {
     li {
         margin-bottom: 0.5em;
@@ -51,6 +51,10 @@ export default {
         &:after {
             content: ": ";
         }
+    }
+    .announce {
+      color: rgba(0, 0, 0, 0.5);
+      font-style: italic;
     }
 }
 </style>
