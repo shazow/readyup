@@ -7,7 +7,7 @@
       </li>
       <li>
         <form v-on:submit.prevent="post">
-          <span class="displayname">{{$store.state.me.name}}</span>
+          <span class="displayname">{{$store.getters.name($store.state.me.id)}}</span>
           <input type="text" v-model.trim="text" placeholder="..." />
           <input type="submit" value="Post" />
         </form>

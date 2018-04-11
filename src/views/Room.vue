@@ -7,6 +7,7 @@
 
     Welcome to {{ $store.state.room }}.
 
+    <h2>Online</h2>
     <ul>
       <li v-for="(peer, id) in $store.state.peers" :key="id" :title="id">
         {{peer.name || id}}

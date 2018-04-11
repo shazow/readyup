@@ -55,6 +55,7 @@ export default new Vuex.Store({
   },
   getters: {
     name: (state) => (peer) => {
+      if (!peer) return 'Anonymoose'
       const p = state.peers[peer]
       if (!p || !p.name) return anonName(peer)
       return p.name
@@ -120,7 +121,7 @@ export default new Vuex.Store({
     },
     setMe(state, {id, name}) {
       if (id && state.me.id !== id) {
-        if (state.me.id) delete state.peers[state.me.id]
+        if (state.me.id) Vue.delete(state.peers, state.me.id)
         Vue.set(state.me, 'id', id)
       }
       if (name) {
@@ -144,7 +145,7 @@ export default new Vuex.Store({
       })
     },
     removePeer(state, peer) {
-      delete state.peers[peer]
+      Vue.delete(state.peers, peer)
     },
     ready(state, value) {
       state.ready = value

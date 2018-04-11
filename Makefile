@@ -16,4 +16,5 @@ status: .git/worktrees/dist
 
 deploy: .git/worktrees/dist
 	$(GITDIST) add .
-	$(GITDIST) commit . -m "Deploy"
+	$(GITDIST) commit . -m "Deploy" -e -v
+	$(GITDIST) push origin gh-pages
