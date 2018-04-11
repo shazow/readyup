@@ -10,7 +10,6 @@
   "dependencies": {
     "@vue/cli": "^3.0.0-beta.6",
     "@vue/cli-service-global": "^3.0.0-beta.6",
-    "ipfs": "^0.28.2",
     "ipfs-pubsub-room": "^1.2.0",
     "node-sass": "^4.8.3",
     "sass-loader": "^6.0.7",

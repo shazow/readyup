@@ -9,7 +9,7 @@
 
     <ul>
       <li v-for="(peer, id) in $store.state.peers" :key="id" :title="id">
-        {{peer.name}}
+        {{peer.name || id}}
       </li>
     </ul>
 

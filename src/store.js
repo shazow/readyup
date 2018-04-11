@@ -2,8 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import Room from 'ipfs-pubsub-room'
-import IPFS from 'ipfs'
-const ipfs = new IPFS({
+const ipfs = new window.Ipfs({
   EXPERIMENTAL: {
     pubsub: true
   },
@@ -11,8 +10,8 @@ const ipfs = new IPFS({
     Addresses: {
       Swarm: [
         // TODO: Try webrtc? https://github.com/ipfs/js-ipfs/issues/1088
-        '/dns4/wrtc-star.discovery.libp2p.io/tcp/443/wss/p2p-webrtc-star'
-        //'/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star'
+        //'/dns4/wrtc-star.discovery.libp2p.io/tcp/443/wss/p2p-webrtc-star'
+        '/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star'
       ]
     }
   }
@@ -23,10 +22,13 @@ Vue.use(Vuex)
 
 const maxLength = 10
 const browserStore = window.localStorage
-const anonName = 'Anonymoose'
+
+function anonName(peer) {
+  return peer
+}
 
 function defaultName() {
-  return browserStore.getItem('name') || anonName
+  return browserStore.getItem('name')
 }
 
 let ipfsRoom;
@@ -54,7 +56,7 @@ export default new Vuex.Store({
   getters: {
     name: (state) => (peer) => {
       const p = state.peers[peer]
-      if (!p) return anonName
+      if (!p || !p.name) return anonName(peer)
       return p.name
     }
   },
@@ -70,7 +72,7 @@ export default new Vuex.Store({
         }
       }
       if (data.name) {
-        state.peers[from] = {name: data.name}
+        Vue.set(state.peers, from, {name: data.name})
       }
       if (data.sync && data.sync > state.started) {
         ipfsRoom.sendTo(from, JSON.stringify({
@@ -82,6 +84,11 @@ export default new Vuex.Store({
         }))
       }
       if (data.state && state.askedState===from) {
+        if (state.me.id && state.me.name) {
+          // Override me
+          data.state.peers[state.me.id] = { name: state.me.name }
+          ipfsRoom.broadcast(JSON.stringify({name: state.me.name}))
+        }
         state.askedState = false
         state.video = data.state.video
         state.posts = data.state.posts
@@ -114,12 +121,14 @@ export default new Vuex.Store({
     setMe(state, {id, name}) {
       if (id && state.me.id !== id) {
         if (state.me.id) delete state.peers[state.me.id]
-        state.me.id = id
+        Vue.set(state.me, 'id', id)
       }
       if (name) {
         browserStore.setItem('name', name)
-        state.me.name = name
+        Vue.set(state.me, 'name', name)
         ipfsRoom.broadcast(JSON.stringify({name}))
+      } else if (state.me.name) {
+        ipfsRoom.broadcast(JSON.stringify({name: state.me.name}))
       }
     },
     setRoom(state, room) {
@@ -131,9 +140,8 @@ export default new Vuex.Store({
       ipfsRoom.broadcast(JSON.stringify({video: state.video}))
     },
     addPeer(state, peer) {
-      state.peers[peer] = {
-        name: anonName,
-      }
+      Vue.set(state.peers, peer, {
+      })
     },
     removePeer(state, peer) {
       delete state.peers[peer]
