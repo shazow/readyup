@@ -10,7 +10,7 @@ const ipfs = new window.Ipfs({
     Addresses: {
       Swarm: [
         // TODO: Try webrtc? https://github.com/ipfs/js-ipfs/issues/1088
-        '/dns4/wrtc-star.discovery.libp2p.io/tcp/443/wss/p2p-webrtc-star',
+        //'/dns4/wrtc-star.discovery.libp2p.io/tcp/443/wss/p2p-webrtc-star',
         '/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star'
       ]
     }
