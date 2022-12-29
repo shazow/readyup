@@ -9,11 +9,11 @@
   },
   "dependencies": {
     "@vue/cli": "^3.8.2",
-    "@vue/cli-service-global": "^3.8.0",
+    "@vue/cli-service-global": "^4.5.19",
     "ipfs-pubsub-room": "^1.4.1",
     "libp2p-mdns": "^0.12",
     "node-sass": "^4.12.0",
-    "sass-loader": "^7.1",
+    "sass-loader": "^13.2",
     "vue": "^2.6.10",
     "vue-router": "^3.0.6",
     "vue-youtube-embed": "^2.2.1",
